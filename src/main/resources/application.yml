@@ -1,0 +1,71 @@
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: userservice
+            uri: http://localhost:8081
+            predicates:
+              - Path=/user/**
+          - id: bookservice
+            uri: http://localhost:8081
+            predicates:
+              - Path=/book/**
+          - id: adminservice
+            uri: http://localhost:8081
+            predicates:
+              - Path=/admin/**
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+
+
+jwt:
+  token:
+    secret:
+      test
+    expired:
+      3600000
+
+
+#spring.application.name=gateway
+##spring.config.import=configserver:
+#server.port=8080
+##spring.cloud.config.uri=http://localhost:8888
+#
+#jwt.token.secret=test
+#jwt.token.expired=3600000
+#
+#logging.level.root=INFO
+#logging.level.org.springframework.security=DEBUG
+#logging.level.org.springframework.cloud.gateway=DEBUG
+
+
+## Spring Cloud Config
+#
+## Consul Configuration
+#spring.cloud.consul.host=localhost
+#spring.cloud.consul.port=8500
+#
+#Routing Configuration
+#spring.cloud.gateway.mvc.routes=routes[0].id=userservice
+#spring.cloud.gateway.mvc.routes[0].uri=http://localhost:8081
+#spring.cloud.gateway.mvc.routes[0].predicates=Path=/user/**
+#spring.cloud.gateway.routes[0].predicates[1]=Path=/book/**
+#spring.cloud.gateway.routes[0].predicates[2]=Path=/admin/**
+#spring.cloud.gateway.routes[0].filters[0]=AddRequestHeader=X-Authenticated-User, #{securityContext.getAuthentication().getName()}
+#spring.cloud.gateway.routes[0].filters[1]=AddRequestHeader=Authorization, Bearer ${token}
+
+#
+#spring.cloud.gateway.routes[1].id=BookService
+#spring.cloud.gateway.routes[1].uri=lb://BookService
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/book/**
+#
+#spring.cloud.gateway.routes[2].id=AdminService
+#spring.cloud.gateway.routes[2].uri=lb://AdminService
+#spring.cloud.gateway.routes[2].predicates[0]=Path=/admin/**
+#
+## Circuit Breaker
+#spring.cloud.circuitbreaker.resilience4j.enabled=true
+
