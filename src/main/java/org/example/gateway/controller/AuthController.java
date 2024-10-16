@@ -1,5 +1,6 @@
 package org.example.gateway.controller;
 
+import org.example.gateway.dto.UserDto;
 import org.example.gateway.dto.UserValidationRequest;
 import org.example.gateway.feign.UserServiceClient;
 import org.example.gateway.jwt.JwtTokenProvider;
@@ -27,7 +28,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@RequestBody UserValidationRequest userValidationRequest) {
-        Boolean isValidUser = userServiceClient.validateUser(userValidationRequest);
+        UserDto user = new UserDto();
+        user.setUsername(userValidationRequest.getUsername());
+        user.setPassword(userValidationRequest.getPassword());
+        user.setRole(userValidationRequest.getRoles().toString());
+        Boolean isValidUser = userServiceClient.validateUser(user);
 
         if (Boolean.TRUE.equals(isValidUser)) {
             String token = jwtTokenProvider.generateToken(userValidationRequest.getUsername(), userValidationRequest.getPassword(), userValidationRequest.getRoles());
@@ -39,7 +44,11 @@ public class AuthController {
 
     @PostMapping("/reg")
     public ResponseEntity<String> registerUser(@RequestBody UserValidationRequest userValidationRequest) {
-        userServiceClient.regUser(userValidationRequest);
+        UserDto user = new UserDto();
+        user.setUsername(userValidationRequest.getUsername());
+        user.setPassword(userValidationRequest.getPassword());
+        user.setRole(userValidationRequest.getRoles().toString());
+        userServiceClient.regUser(user);
         return ResponseEntity.ok("Register successful");
     }
 }
