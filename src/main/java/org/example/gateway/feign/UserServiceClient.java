@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "Userservice", url = "http://localhost:8081")
+@FeignClient(name = "userservice", url = "http://userservice:8081")
 public interface UserServiceClient {
 
     @PostMapping("/user/reg")
