@@ -38,7 +38,7 @@ pipeline {
 
                 sh """
                     kubectl create deployment gateway --image=${IMAGE_NAME} 
-                    kubectl expose deployment gateway --type=ClusterIP --port=8888
+                    kubectl expose deployment gateway --type=ClusterIP --port=8080
                  """
             } else {
                 sh "kubectl set image deployment/gateway gateway=${IMAGE_NAME}"
