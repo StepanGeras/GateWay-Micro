@@ -2,8 +2,8 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY build/libs/GateWay-0.0.1-SNAPSHOT.jar GateWay-0.0.1-SNAPSHOT.jar
+COPY build/libs/*head.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "GateWay-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
